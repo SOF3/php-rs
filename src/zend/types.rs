@@ -12,25 +12,25 @@ pub union ZendValue {
 
 #[repr(C)]
 pub union U1 {
-    pub type_info: libc::uint32_t,
+    pub type_info: u32,
 }
 
 #[repr(C)]
 pub union U2 {
-    pub next: libc::uint32_t,
-    pub num_args: libc::uint32_t,
+    pub next: u32,
+    pub num_args: u32,
 }
 
 #[repr(C)]
 pub struct ZendRefCounted {
-    pub ref_count: libc::uint32_t,
-    pub type_info: libc::uint32_t,
+    pub ref_count: u32,
+    pub type_info: u32,
 }
 
 #[repr(C)]
 pub struct ZendString {
     pub gc: ZendRefCounted,
-    pub hash: libc::uint32_t,
+    pub hash: u32,
     pub len: libc::size_t,
     pub value: *mut libc::c_char,
 }
@@ -80,10 +80,10 @@ impl IntoZval for &mut ZendString {
 }
 
 impl IntoZval for i64 {
-	fn into_zval(self, zval: &mut Zval) {
-		(*zval).u1.type_info = 4;
-		(*zval).value.long_value = self;
-	}
+    fn into_zval(self, zval: &mut Zval) {
+        (*zval).u1.type_info = 4;
+        (*zval).value.long_value = self;
+    }
 }
 
 impl IntoZval for u32 {
